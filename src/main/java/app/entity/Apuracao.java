@@ -9,8 +9,8 @@ public class Apuracao {
 
 	private Integer total;
 	
-	private List<Object> prefeito;
+	private List<Candidato> prefeito;
 	
-	private List<Object> vereador;
+	private List<Candidato> vereador;
 	
 }

@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -32,6 +34,8 @@ public class Candidato {
 	private Integer numCand;
 	
 	@NotNull(message = "funcao nao pode ser nulo")
+	@Min(value = 0, message = "Funcao deve ser no mínimo 0")
+    @Max(value = 1, message = "Funcao deve ser no máximo 1")
 	private Integer funcao;
 	
 	@NotBlank(message = "Status não pode ser vazio")

@@ -17,6 +17,8 @@ public class CandidatoService {
 	
 	public String save(Candidato candidato) {
 		
+		candidato.setStatus("APTO");
+		
 		this.candidatoRepository.save(candidato);
 		return "Candidato cadastrado com sucesso";
 	}
@@ -51,8 +53,18 @@ public class CandidatoService {
 		if (candidatoEx == null)
 			return "candidato não existe";
 		
-		this.candidatoRepository.deleteById(id);
+		candidatoEx.setStatus("INATIVO");
+		this.save(candidatoEx);
 		return "Candidato deletado com sucesso";
+	}
+	
+	public List<Candidato> findAllPrefeito() {
+		return this.candidatoRepository.findAllByFuncao(0);
+	}
+	
+	public List<Candidato> findAllVereador() {
+		return this.candidatoRepository.findAllByFuncao(1);
+		
 	}
 	
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Eleitor;
+import app.exception.EleitorInvalido;
+import app.exception.StatusInvalido;
 import app.repository.EleitorRepository;
 
 @Service
@@ -30,7 +32,7 @@ public class EleitorService {
 		
 	    Eleitor eleitorEx = this.findById(id);
 	    if (eleitorEx == null)
-	        return "Eleitor não existente";
+	    	throw new EleitorInvalido("Eleitor não existente");
 	    
 	    if (verificarStatus(eleitor, eleitorEx) == true) 
 	    	eleitor.setStatus("APTO");
@@ -67,11 +69,14 @@ public class EleitorService {
 		
 		Eleitor eleitorEx = this.findById(id);
 		if (eleitorEx == null)
-			return "Eleitor não existente";
+			throw new StatusInvalido("Eleitor não existente");
+		
+		if (eleitorEx.getStatus().equals("VOTOU"))
+			throw new StatusInvalido("Usuário já votou. Não foi possível inativá-lo");
 		
 		eleitorEx.setStatus("INATIVO");
 		
-		this.eleitorRepository.save(eleitorEx);
+		this.save(eleitorEx);
 		return "Eleitor deletado com sucesso";
 	}
 
