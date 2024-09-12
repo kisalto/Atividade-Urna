@@ -38,5 +38,5 @@ public class Eleitor {
 	private String email;
 	
 	@NotBlank(message = "status é um campo obrigatorio")
-	private String status;
+	private String status = null;
 }

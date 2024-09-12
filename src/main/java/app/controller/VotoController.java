@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import app.entity.Voto;
 import app.service.VotoService;
@@ -23,9 +24,12 @@ public class VotoController {
 	@Autowired
 	private VotoService votoService;
 	
-	@PostMapping()
+	@PostMapping("/save")
 	public ResponseEntity<String> save (@RequestBody Voto voto) {
 		try {
+			if (voto.getData() != null || voto.getComprovante() != null)
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "data e comprovante deve ser nulo");
+			
 			String mensagem = this.votoService.save(voto);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
@@ -33,7 +37,7 @@ public class VotoController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/findById")
 	public ResponseEntity<Voto> findById (@PathVariable Long id) {
 		try {
 			Voto voto = this.votoService.findById(id);
@@ -43,7 +47,7 @@ public class VotoController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/findAll")
 	public ResponseEntity<List<Voto>> findAll () {
 		try {
 			List<Voto> voto = this.votoService.findAll();
@@ -53,7 +57,7 @@ public class VotoController {
 		}
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/delete")
 	public ResponseEntity<String> delete (@PathVariable Long id) {
 		try {
 			String mensagem = this.votoService.delete(id);

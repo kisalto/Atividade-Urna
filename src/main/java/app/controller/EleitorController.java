@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import app.entity.Eleitor;
 import app.service.EleitorService;
@@ -24,9 +25,12 @@ public class EleitorController {
 	@Autowired
 	private EleitorService eleitorService;
 	
-	@PostMapping()
+	@PostMapping("/save")
 	public ResponseEntity<String> save (@RequestBody Eleitor eleitor) {
 		try {
+			if (eleitor.getStatus() != null)
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
+			
 			String mensagem = this.eleitorService.save(eleitor);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
@@ -34,7 +38,7 @@ public class EleitorController {
 		}
 	}
 	
-	@PutMapping
+	@PutMapping("/update")
 	public ResponseEntity<String> update (@RequestBody Eleitor eleitor, @PathVariable Long id) {
 		try {
 			String mensagem = this.eleitorService.update(eleitor, id);
@@ -44,7 +48,7 @@ public class EleitorController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/findById")
 	public ResponseEntity<Eleitor> findById (@PathVariable Long id) {
 		try {
 			Eleitor eleitor = this.eleitorService.findById(id);
@@ -54,7 +58,7 @@ public class EleitorController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/findAll")
 	public ResponseEntity<List<Eleitor>> findAll () {
 		try {
 			List<Eleitor> eleitor = this.eleitorService.findAll();
@@ -64,7 +68,7 @@ public class EleitorController {
 		}
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/delete")
 	public ResponseEntity<String> delete (@PathVariable Long id) {
 		try {
 			String mensagem = this.eleitorService.delete(id);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import app.entity.Candidato;
 import app.service.CandidatoService;
@@ -24,9 +25,12 @@ public class CandidatoController {
 	@Autowired
 	private CandidatoService candidatoService;
 	
-	@PostMapping()
+	@PostMapping("/save")
 	public ResponseEntity<String> save (@RequestBody Candidato candidato) {
 		try {
+			if (candidato.getStatus() != null)
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
+				
 			String mensagem = this.candidatoService.save(candidato);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
@@ -34,7 +38,7 @@ public class CandidatoController {
 		}
 	}
 	
-	@PutMapping
+	@PutMapping("/update")
 	public ResponseEntity<String> update (@RequestBody Candidato candidato, @PathVariable Long id) {
 		try {
 			String mensagem = this.candidatoService.update(candidato, id);
@@ -44,7 +48,7 @@ public class CandidatoController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/findById")
 	public ResponseEntity<Candidato> findById (@PathVariable Long id) {
 		try {
 			Candidato candidato = this.candidatoService.findById(id);
@@ -54,7 +58,7 @@ public class CandidatoController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/findAll")
 	public ResponseEntity<List<Candidato>> findAll () {
 		try {
 			List<Candidato> candidato = this.candidatoService.findAll();
@@ -64,7 +68,7 @@ public class CandidatoController {
 		}
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/delete")
 	public ResponseEntity<String> delete (@PathVariable Long id) {
 		try {
 			String mensagem = this.candidatoService.delete(id);
