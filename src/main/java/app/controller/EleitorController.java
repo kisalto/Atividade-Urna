@@ -24,58 +24,71 @@ public class EleitorController {
 
 	@Autowired
 	private EleitorService eleitorService;
-	
+
 	@PostMapping("/save")
-	public ResponseEntity<String> save (@RequestBody Eleitor eleitor) {
+	public ResponseEntity<String> save(@RequestBody Eleitor eleitor) {
+
 		try {
 			if (eleitor.getStatus() != null)
 				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
-			
+
 			String mensagem = this.eleitorService.save(eleitor);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PutMapping("/update")
-	public ResponseEntity<String> update (@RequestBody Eleitor eleitor, @PathVariable Long id) {
+	public ResponseEntity<String> update(@RequestBody Eleitor eleitor, @PathVariable Long id) {
+
 		try {
+			if (eleitor.getStatus() != null)
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
+
 			String mensagem = this.eleitorService.update(eleitor, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/findById")
-	public ResponseEntity<Eleitor> findById (@PathVariable Long id) {
+	public ResponseEntity<Eleitor> findById(@PathVariable Long id) {
+		
 		try {
 			Eleitor eleitor = this.eleitorService.findById(id);
-			return new ResponseEntity<>(eleitor, HttpStatus.OK); 
+			return new ResponseEntity<>(eleitor, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/findAll")
-	public ResponseEntity<List<Eleitor>> findAll () {
+	public ResponseEntity<List<Eleitor>> findAll() {
+		
 		try {
 			List<Eleitor> eleitor = this.eleitorService.findAll();
-			return new ResponseEntity<>(eleitor, HttpStatus.OK); 
+			return new ResponseEntity<>(eleitor, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@DeleteMapping("/delete")
-	public ResponseEntity<String> delete (@PathVariable Long id) {
+	public ResponseEntity<String> delete(@PathVariable Long id) {
+		
 		try {
 			String mensagem = this.eleitorService.delete(id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 }

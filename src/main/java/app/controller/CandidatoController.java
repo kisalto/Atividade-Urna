@@ -21,58 +21,71 @@ import app.service.CandidatoService;
 @RestController
 @RequestMapping("api/candidato")
 public class CandidatoController {
-	
+
 	@Autowired
 	private CandidatoService candidatoService;
-	
+
 	@PostMapping("/save")
-	public ResponseEntity<String> save (@RequestBody Candidato candidato) {
+	public ResponseEntity<String> save(@RequestBody Candidato candidato) {
+
 		try {
 			if (candidato.getStatus() != null)
 				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
-				
+
 			String mensagem = this.candidatoService.save(candidato);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PutMapping("/update")
-	public ResponseEntity<String> update (@RequestBody Candidato candidato, @PathVariable Long id) {
+	public ResponseEntity<String> update(@RequestBody Candidato candidato, @PathVariable Long id) {
+
 		try {
+			if (candidato.getStatus() != null)
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
+
 			String mensagem = this.candidatoService.update(candidato, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/findById")
-	public ResponseEntity<Candidato> findById (@PathVariable Long id) {
+	public ResponseEntity<Candidato> findById(@PathVariable Long id) {
+
 		try {
 			Candidato candidato = this.candidatoService.findById(id);
-			return new ResponseEntity<>(candidato, HttpStatus.OK); 
+			return new ResponseEntity<>(candidato, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/findAll")
-	public ResponseEntity<List<Candidato>> findAll () {
+	public ResponseEntity<List<Candidato>> findAll() {
+
 		try {
 			List<Candidato> candidato = this.candidatoService.findAll();
-			return new ResponseEntity<>(candidato, HttpStatus.OK); 
+			return new ResponseEntity<>(candidato, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@DeleteMapping("/delete")
-	public ResponseEntity<String> delete (@PathVariable Long id) {
+	public ResponseEntity<String> delete(@PathVariable Long id) {
+
 		try {
 			String mensagem = this.candidatoService.delete(id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
