@@ -34,12 +34,9 @@ public class CandidatoService {
 	}
 	
 	public Candidato findById(Long id) {
-		
-		Optional<Candidato> optional = this.candidatoRepository.findById(id);
-		if (optional == null)
-			return null;
-		
-		return optional.get();
+	    Optional<Candidato> optional = this.candidatoRepository.findById(id);
+
+	    return optional.orElse(null);
 	}
 	
 	public List<Candidato> findAll() {

@@ -18,65 +18,61 @@ public class EleitorService {
 	private EleitorRepository eleitorRepository;
 
 	public String save(Eleitor eleitor) {
-		
+
 		if (eleitor.getCPF() == null || eleitor.getEmail() == null)
 			eleitor.setStatus("PENDENTE");
 		else
 			eleitor.setStatus("APTO");
-		
+
 		this.eleitorRepository.save(eleitor);
 		return "Eleitor cadastrado com sucesso";
 	}
 
 	public String update(Eleitor eleitor, Long id) {
-		
-	    Eleitor eleitorEx = this.findById(id);
-	    if (eleitorEx == null)
-	    	throw new EleitorInvalido("Eleitor não existente");
-	    
-	    if (verificarStatus(eleitor, eleitorEx) == true) 
-	    	eleitor.setStatus("APTO");
 
-	    this.eleitorRepository.save(eleitor);
-	    return "Eleitor atualizado com sucesso";
+		Eleitor eleitorEx = this.findById(id);
+		if (eleitorEx == null)
+			throw new EleitorInvalido("Eleitor não existente");
+
+		if (verificarStatus(eleitor, eleitorEx) == true)
+			eleitor.setStatus("APTO");
+
+		this.eleitorRepository.save(eleitor);
+		return "Eleitor atualizado com sucesso";
 	}
 
 	private Boolean verificarStatus(Eleitor eleitor, Eleitor eleitorEx) {
-		
 		if (eleitor.getCPF() == null && eleitor.getEmail() == null)
 			return false;
-		
+
 		if (!eleitorEx.getStatus().equals("PENDENTE"))
 			return false;
-		
+
 		return true;
 	}
-	
+
 	public Eleitor findById(Long id) {
-		
 		Optional<Eleitor> optional = this.eleitorRepository.findById(id);
-		if (optional == null)
-			return null;
-		return optional.get();
+
+		return optional.orElse(null);
 	}
 
 	public List<Eleitor> findAll() {
-		
 		return this.eleitorRepository.findAll();
 	}
 
 	public String delete(Long id) {
-		
 		Eleitor eleitorEx = this.findById(id);
+		
 		if (eleitorEx == null)
 			throw new StatusInvalido("Eleitor não existente");
-		
+
 		if (eleitorEx.getStatus().equals("VOTOU"))
 			throw new StatusInvalido("Usuário já votou. Não foi possível inativá-lo");
-		
+
 		eleitorEx.setStatus("INATIVO");
-		
 		this.save(eleitorEx);
+		
 		return "Eleitor deletado com sucesso";
 	}
 
