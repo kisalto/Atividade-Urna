@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Apuracao {
 
-	private Integer total;
+	private int total;
 	
 	private List<Candidato> prefeito;
 	

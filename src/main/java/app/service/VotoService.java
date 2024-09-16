@@ -64,12 +64,12 @@ public class VotoService {
 		List<Candidato> vereadores = candidatoService.findAllVereador();
 		
 		for (Candidato prefeito : prefeitos) {
-		    int votos = votoRepository.countByCandidatoId(prefeito.getId());
+		    int votos = votoRepository.countByPrefeitoId(prefeito.getId());
 		    prefeito.setVotos(votos);
 		}
 		
 		for (Candidato vereador : vereadores) {
-			int votos = votoRepository.countByCandidatoId(vereador.getId());
+			int votos = votoRepository.countByVereadorId(vereador.getId());
 			vereador.setVotos(votos);
 		};
 		

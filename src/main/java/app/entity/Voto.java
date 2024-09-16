@@ -27,13 +27,13 @@ public class Voto {
     @JsonIgnoreProperties("voto")
     @NotNull(message = "Prefeito não pode ser nulo")
     @Pattern(regexp = "^\\d{2}000$", message = "O candidato escolhido para prefeito é um candidato a vereador. Refaça a requisição!")
-    private Integer prefeito;
+    private Candidato prefeito;
     
     @ManyToOne
     @JsonIgnoreProperties("voto")
     @NotNull(message = "Vereador não pode ser nulo")
     @Pattern(regexp = "^\\d{5}$", message = "O candidato escolhido para vereador é um candidato a prefeito. Refaça a requisição!")
-    private Integer vereador;
+    private Candidato vereador;
     
     @NotBlank(message = "Comprovante não pode ser vazio")
     private String comprovante;

@@ -8,6 +8,6 @@ import app.entity.Candidato;
 
 public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
 
-	List<Candidato> findAllByFuncao(int funcao);
+	List<Candidato> findAllByFuncaoAndStatusNot(int funcao, String status);
 	
 }

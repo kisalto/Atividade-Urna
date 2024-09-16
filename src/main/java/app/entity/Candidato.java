@@ -31,20 +31,20 @@ public class Candidato {
 	
 	@NotNull(message = "Numero de candidato não pode ser nulo")
 	@Column(unique = true)
-	private Integer numCand;
+	private int numCand;
 	
 	@NotNull(message = "funcao nao pode ser nulo")
 	@Min(value = 0, message = "Funcao deve ser no mínimo 0")
     @Max(value = 1, message = "Funcao deve ser no máximo 1")
-	private Integer funcao;
+	private int funcao;
 	
 	@NotBlank(message = "Status não pode ser vazio")
 	private String status = null;
 	
 	@Transient
-	private Integer votos;
+	private int votos;
 	
-	@OneToMany(mappedBy = "candidato")
+	@OneToMany
 	private List<Voto> voto;
 	
 }

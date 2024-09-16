@@ -59,11 +59,11 @@ public class CandidatoService {
 	}
 	
 	public List<Candidato> findAllPrefeito() {
-		return this.candidatoRepository.findAllByFuncao(0);
+		return this.candidatoRepository.findAllByFuncaoAndStatusNot(0, "INATIVO");
 	}
 	
 	public List<Candidato> findAllVereador() {
-		return this.candidatoRepository.findAllByFuncao(1);
+		return this.candidatoRepository.findAllByFuncaoAndStatusNot(1, "INATIVO");
 		
 	}
 	
