@@ -15,10 +15,7 @@ import org.mockito.MockitoAnnotations;
 import app.entity.Eleitor;
 import app.exception.EleitorInvalido;
 import app.exception.StatusInvalido;
-import app.repository.CandidatoRepository;
 import app.repository.EleitorRepository;
-import app.repository.VotoRepository;
-import app.service.CandidatoService;
 import app.service.EleitorService;
 import app.service.VotoService;
 
@@ -26,15 +23,6 @@ public class EleitorServiceTest {
 
 	@InjectMocks
     private VotoService votoService;
-	
-	@Mock
-	private VotoRepository votoRepository;
-	
-	@InjectMocks
-    private CandidatoService candidatoService;
-	
-	@Mock
-	private CandidatoRepository candidatoRepository;
 	
 	@InjectMocks
 	private EleitorService eleitorService;
