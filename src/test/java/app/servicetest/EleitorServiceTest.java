@@ -30,14 +30,16 @@ public class EleitorServiceTest {
 	@Mock
 	private EleitorRepository eleitorRepository;
 
-	private Eleitor eleitor = new Eleitor();
+	private Eleitor eleitor;
 
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 		
 		votoService = new VotoService();
-
+		eleitor = new Eleitor();
+		
+		
 		Eleitor eleitor = new Eleitor();
 		eleitor.setId(1L);
 		eleitor.setCPF("12345678900");

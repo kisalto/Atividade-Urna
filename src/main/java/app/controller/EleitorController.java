@@ -30,7 +30,7 @@ public class EleitorController {
 
 		try {
 			if (eleitor.getStatus() != null)
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
+	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("status deve ser nulo");
 
 			String mensagem = this.eleitorService.save(eleitor);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);

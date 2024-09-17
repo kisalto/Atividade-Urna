@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import app.entity.Apuracao;
 import app.entity.Voto;
@@ -26,7 +25,7 @@ public class VotoController {
 	public ResponseEntity<String> votar(@RequestBody Voto voto, @RequestParam Long id) {
 		try {
 			if (voto.getData() != null || voto.getComprovante() != null)
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "data e comprovante deve ser nulo");
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("data e comprovante deve ser nulo");
 
 			String mensagem = this.votoService.votar(voto, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);

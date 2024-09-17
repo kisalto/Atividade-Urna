@@ -38,8 +38,8 @@ class VotoServiceTest {
     @Mock
     private CandidatoService candidatoService;
 
-    private Eleitor eleitor = new Eleitor();
-    private Voto voto= new Voto();
+    private Eleitor eleitor;
+    private Voto voto;
     
     @BeforeEach
     void setUp() {

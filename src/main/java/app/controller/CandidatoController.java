@@ -30,7 +30,7 @@ public class CandidatoController {
 
 		try {
 			if (candidato.getStatus() != null)
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "status deve ser nulo");
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("status deve ser nulo");
 
 			String mensagem = this.candidatoService.save(candidato);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
