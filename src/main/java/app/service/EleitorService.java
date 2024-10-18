@@ -75,5 +75,9 @@ public class EleitorService {
 		
 		return "Eleitor deletado com sucesso";
 	}
+	
+	public Eleitor findByCPF(String cpf) {
+    	return eleitorRepository.findByCpf(cpf);
+    }
 
 }

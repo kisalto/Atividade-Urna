@@ -1,7 +1,5 @@
 package app.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,4 +45,6 @@ public class Eleitor {
 	
 	@NotBlank(message = "status é um campo obrigatorio")
 	private String status = null;
+	
+	private String password;
 }

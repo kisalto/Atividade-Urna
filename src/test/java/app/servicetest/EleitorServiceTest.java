@@ -148,8 +148,8 @@ public class EleitorServiceTest {
 	@Test
 	public void testFindAll() {
 		List<Eleitor> eleitor = List.of(
-				new Eleitor(null, "eleitor A", "12345678900", "batata", "(45) 9 9927-9690", null, "teste@email.com", null),
-				new Eleitor(null, "eleitor B", "98765432100", "batata", "(45) 9 9927-9690", null, "teste@email.com", null));
+				new Eleitor(null, "eleitor A", "12345678900", "batata", "(45) 9 9927-9690", null, "teste@email.com", null, null),
+				new Eleitor(null, "eleitor B", "98765432100", "batata", "(45) 9 9927-9690", null, "teste@email.com", null, null));
 		
 		when(eleitorRepository.findAll()).thenReturn(eleitor);
 		
