@@ -27,7 +27,7 @@ public class Eleitor {
 	@NotBlank(message = "Campo nome nao pode ser vazio")
 	private String nome;
 	
-	@org.hibernate.validator.constraints.br.CPF
+	@Pattern(regexp = "\\d{11}", message = "O CPF deve ter exatamente 11 dígitos")
 	private String CPF;
 	
 	@NotBlank(message = "Profissão é um campo obrigatorio")
@@ -46,5 +46,16 @@ public class Eleitor {
 	@NotBlank(message = "status é um campo obrigatorio")
 	private String status = null;
 	
-	private String password;
+	private String senha;
+	
+//	{
+//	    "id": 1,
+//	    "nome": "teste",
+//	    "cpf": "12345678900",
+//	    "profissao": "tester",
+//	    "celular": "(45) 91234-5678",
+//	    "telefoneFixo": "(45) 1234-5678",
+//	    "email": "teste@email.com",
+//	    "senha": "123"
+//	}
 }

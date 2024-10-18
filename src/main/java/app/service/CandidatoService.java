@@ -61,7 +61,6 @@ public class CandidatoService {
 	
 	public List<Candidato> findAllVereador() {
 		return this.candidatoRepository.findAllByFuncaoAndStatusNot(1, "INATIVO");
-		
 	}
 	
 }

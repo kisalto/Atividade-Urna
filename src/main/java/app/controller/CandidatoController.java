@@ -80,6 +80,30 @@ public class CandidatoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/findAllPrefeito")
+	public ResponseEntity<List<Candidato>> findAllPrefeito() {
+
+		try {
+			List<Candidato> candidato = this.candidatoService.findAllPrefeito();
+			return new ResponseEntity<>(candidato, HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findAllVereador")
+	public ResponseEntity<List<Candidato>> findAllVereador() {
+
+		try {
+			List<Candidato> candidato = this.candidatoService.findAllVereador();
+			return new ResponseEntity<>(candidato, HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<String> delete(@PathVariable Long id) {

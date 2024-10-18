@@ -77,7 +77,7 @@ public class EleitorService {
 	}
 	
 	public Eleitor findByCPF(String cpf) {
-    	return eleitorRepository.findByCpf(cpf);
+    	return eleitorRepository.findByCPF(cpf);
     }
 
 }

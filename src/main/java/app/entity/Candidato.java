@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ public class Candidato {
 	@NotBlank(message = "Nome não pode ser vazio")
 	private String nome;
 	
-	@NotBlank(message = "CPF não pode ser vazio")
+	@Pattern(regexp = "\\d{11}", message = "O CPF deve ter exatamente 11 dígitos")
 	private String CPF;
 	
 	@NotNull(message = "Numero de candidato não pode ser nulo")
@@ -52,5 +53,13 @@ public class Candidato {
 	
 	@OneToMany
 	private List<Voto> voto;
+	
+//	{
+//	    "id": 1,
+//	    "nome": "teste",
+//	    "cpf": "12345678900",
+//	    "numCand": 10000,
+//	    "funcao": 0
+//	}
 	
 }
