@@ -40,7 +40,6 @@ public class CandidatoService {
 	}
 	
 	public List<Candidato> findAll() {
-		
 		return this.candidatoRepository.findAll();
 	}
 	
@@ -51,7 +50,7 @@ public class CandidatoService {
 			return "candidato não existe";
 		
 		candidatoEx.setStatus("INATIVO");
-		this.save(candidatoEx);
+		this.update(candidatoEx, id);
 		return "Candidato deletado com sucesso";
 	}
 	
