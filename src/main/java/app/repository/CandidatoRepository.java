@@ -10,4 +10,6 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
 
 	List<Candidato> findAllByFuncaoAndStatusNot(int funcao, String status);
 	
+	Candidato findByNumCand(int numCand);
+	
 }

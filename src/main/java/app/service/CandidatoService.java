@@ -63,4 +63,8 @@ public class CandidatoService {
 		return this.candidatoRepository.findAllByFuncaoAndStatusNot(1, "INATIVO");
 	}
 	
+	public Candidato findByNumCand(int numCand) {
+		return this.candidatoRepository.findByNumCand(numCand);
+	}
+	
 }

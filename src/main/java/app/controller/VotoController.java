@@ -17,19 +17,19 @@ import app.service.VotoService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("api/eleitor")
+@RequestMapping("api/votar")
 public class VotoController {
 
 	@Autowired
 	private VotoService votoService;
 	
 	@PostMapping("/votar")
-	public ResponseEntity<String> votar(@RequestBody Voto voto, @RequestParam Long id) {
+	public ResponseEntity<String> votar(@RequestBody Voto voto) { //, @RequestParam Long id
 		try {
-			if (voto.getData() != null || voto.getComprovante() != null)
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("data e comprovante deve ser nulo");
+			if (voto.getData() != null)
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("data deve ser nulo");
 
-			String mensagem = this.votoService.votar(voto, id);
+			String mensagem = this.votoService.votar(voto); //, id
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -1,5 +1,7 @@
 package app.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +13,7 @@ import app.entity.Apuracao;
 import app.entity.Candidato;
 import app.entity.Eleitor;
 import app.entity.Voto;
+import app.exception.CandidatoInvalido;
 import app.exception.EleitorInvalido;
 import app.exception.StatusInvalido;
 import app.repository.VotoRepository;
@@ -27,9 +30,13 @@ public class VotoService {
 	@Autowired
 	private CandidatoService candidatoService;
 	
-	public String votar(Voto voto, Long id) {
+	public String votar(Voto voto) { //long id
 
-		verificarEleitor(id);
+		//verificarEleitor(id);
+		
+		encontrarCandidatos(voto);
+		
+		voto.setData(dataLocal());
 		
 		this.votoRepository.save(voto);
 		
@@ -37,23 +44,44 @@ public class VotoService {
 		
 		return hash;
 	}
+	
+	private String dataLocal() {
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = date.format(formatter);
 
-	private void verificarEleitor (Long id) {
-		
-		Eleitor eleitor = eleitorService.findById(id);
-		if (eleitor == null)
-			throw new EleitorInvalido("Eleitor invalido");
-		
-		else if (!eleitor.getStatus().equals("APTO")) {
-			eleitor.setStatus("BLOQUEADO");
-			eleitorService.save(eleitor);
-			
-			throw new StatusInvalido("Usuário com cadastro invalido tentou votar. O usuário será bloqueado!");
-		}
-		
-		eleitor.setStatus("VOTOU");
-		eleitorService.save(eleitor);
+        return formattedDate;
 	}
+	
+	private void encontrarCandidatos(Voto voto) {
+		Candidato prefeito = candidatoService.findByNumCand(voto.getNumPref());
+		Candidato vereador = candidatoService.findByNumCand(voto.getNumVer());
+		
+		if (prefeito == null || vereador == null)
+			throw new CandidatoInvalido("candidato inexistente");
+		
+		
+		
+		voto.setPrefeito(prefeito);
+		voto.setVereador(vereador);
+	}
+
+//	private void verificarEleitor (Long id) {
+//		
+//		Eleitor eleitor = eleitorService.findById(id);
+//		if (eleitor == null)
+//			throw new EleitorInvalido("Eleitor invalido");
+//		
+//		else if (!eleitor.getStatus().equals("APTO")) {
+//			eleitor.setStatus("BLOQUEADO");
+//			eleitorService.save(eleitor);
+//			
+//			throw new StatusInvalido("Usuário com cadastro invalido tentou votar. O usuário será bloqueado!");
+//		}
+//		
+//		eleitor.setStatus("VOTOU");
+//		eleitorService.save(eleitor);
+//	}
 	
 	public Apuracao realizarApuracao() {
 		

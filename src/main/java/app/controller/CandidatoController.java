@@ -42,7 +42,7 @@ public class CandidatoController {
 		}
 	}
 
-	@PutMapping("/update")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@RequestBody Candidato candidato, @PathVariable Long id) {
 
 		try {
@@ -57,7 +57,7 @@ public class CandidatoController {
 		}
 	}
 
-	@GetMapping("/findById")
+	@GetMapping("/findById/{id}")
 	public ResponseEntity<Candidato> findById(@PathVariable Long id) {
 
 		try {
@@ -105,7 +105,7 @@ public class CandidatoController {
 		}
 	}
 
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 
 		try {

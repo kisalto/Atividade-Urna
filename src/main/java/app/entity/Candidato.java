@@ -55,7 +55,6 @@ public class Candidato {
 	private List<Voto> voto;
 	
 //	{
-//	    "id": 1,
 //	    "nome": "teste",
 //	    "cpf": "12345678900",
 //	    "numCand": 10000,
