@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +20,19 @@ import org.springframework.web.server.ResponseStatusException;
 
 import app.entity.Eleitor;
 import app.service.EleitorService;
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("api/eleitor")
+@Validated
 public class EleitorController {
 
 	@Autowired
 	private EleitorService eleitorService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Eleitor eleitor) {
+	public ResponseEntity<String> save(@Valid @RequestBody Eleitor eleitor) {
 
 		try {
 			if (eleitor.getStatus() != null)
@@ -44,7 +47,7 @@ public class EleitorController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<String> update(@RequestBody Eleitor eleitor, @PathVariable Long id) {
+	public ResponseEntity<String> update(@Valid @RequestBody Eleitor eleitor, @PathVariable Long id) {
 
 		try {
 			if (eleitor.getStatus() != null)
@@ -58,7 +61,7 @@ public class EleitorController {
 		}
 	}
 
-	@GetMapping("/findById")
+	@GetMapping("/findById/{id}")
 	public ResponseEntity<Eleitor> findById(@PathVariable Long id) {
 		
 		try {
@@ -81,6 +84,18 @@ public class EleitorController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/findAllNaoInativo")
+	public ResponseEntity<List<Eleitor>> findAllNaoInativo() {
+		
+		try {
+			List<Eleitor> eleitor = this.eleitorService.findAllNaoInativo();
+			return new ResponseEntity<>(eleitor, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@GetMapping("/findByCPF")
     public ResponseEntity<Eleitor> findByCPF(@RequestParam String cpf) {
@@ -92,7 +107,7 @@ public class EleitorController {
         }
     }
 	
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		
 		try {

@@ -46,8 +46,6 @@ public class Eleitor {
 	@NotBlank(message = "status é um campo obrigatorio")
 	private String status = null;
 	
-	private String senha;
-	
 //	{
 //	    "id": 1,
 //	    "nome": "teste",
@@ -56,6 +54,5 @@ public class Eleitor {
 //	    "celular": "(45) 91234-5678",
 //	    "telefoneFixo": "(45) 1234-5678",
 //	    "email": "teste@email.com",
-//	    "senha": "123"
 //	}
 }

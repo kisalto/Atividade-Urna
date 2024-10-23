@@ -71,7 +71,7 @@ public class EleitorService {
 			throw new StatusInvalido("Usuário já votou. Não foi possível inativá-lo");
 
 		eleitorEx.setStatus("INATIVO");
-		this.save(eleitorEx);
+		this.update(eleitorEx, id);
 		
 		return "Eleitor deletado com sucesso";
 	}
@@ -79,5 +79,9 @@ public class EleitorService {
 	public Eleitor findByCPF(String cpf) {
     	return eleitorRepository.findByCPF(cpf);
     }
+	
+	public List<Eleitor> findAllNaoInativo() {
+		return eleitorRepository.findAllByStatusNot("INATIVO");
+	}
 
 }
