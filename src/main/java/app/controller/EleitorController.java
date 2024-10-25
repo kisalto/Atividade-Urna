@@ -32,7 +32,7 @@ public class EleitorController {
 	private EleitorService eleitorService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@Valid @RequestBody Eleitor eleitor) {
+	public ResponseEntity<String> save(@RequestBody Eleitor eleitor) {
 
 		try {
 			if (eleitor.getStatus() != null)
@@ -47,7 +47,7 @@ public class EleitorController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<String> update(@Valid @RequestBody Eleitor eleitor, @PathVariable Long id) {
+	public ResponseEntity<String> update(@RequestBody Eleitor eleitor, @PathVariable Long id) {
 
 		try {
 			if (eleitor.getStatus() != null)

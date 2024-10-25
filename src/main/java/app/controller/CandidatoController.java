@@ -31,7 +31,7 @@ public class CandidatoController {
 	private CandidatoService candidatoService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@Valid @RequestBody Candidato candidato) {
+	public ResponseEntity<String> save(@RequestBody Candidato candidato) {
 
 		try {
 			if (candidato.getStatus() != null)
@@ -46,7 +46,7 @@ public class CandidatoController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@Valid @RequestBody Candidato candidato, @PathVariable Long id) {
+	public ResponseEntity<String> update(@RequestBody Candidato candidato, @PathVariable Long id) {
 
 		try {
 			if (candidato.getStatus() != null)

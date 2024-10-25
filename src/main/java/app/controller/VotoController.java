@@ -27,7 +27,7 @@ public class VotoController {
 	private VotoService votoService;
 	
 	@PostMapping("/votar")
-	public ResponseEntity<String> votar(@Valid @RequestBody Voto voto) { //, @RequestParam Long id
+	public ResponseEntity<String> votar(@RequestBody Voto voto) { //, @RequestParam Long id
 		try {
 			if (voto.getData() != null)
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("data deve ser nulo");
