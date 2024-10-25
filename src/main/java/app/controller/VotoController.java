@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +27,13 @@ public class VotoController {
 	@Autowired
 	private VotoService votoService;
 	
-	@PostMapping("/votar")
-	public ResponseEntity<String> votar(@RequestBody Voto voto) { //, @RequestParam Long id
+	@PostMapping("/votar/{id}")
+	public ResponseEntity<String> votar(@RequestBody Voto voto, @PathVariable Long id) {
 		try {
 			if (voto.getData() != null)
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("data deve ser nulo");
 
-			String mensagem = this.votoService.votar(voto); //, id
+			String mensagem = this.votoService.votar(voto, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

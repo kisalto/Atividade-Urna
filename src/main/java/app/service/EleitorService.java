@@ -45,7 +45,7 @@ public class EleitorService {
 		if (eleitor.getCPF() == null && eleitor.getEmail() == null)
 			return false;
 
-		if (!eleitorEx.getStatus().equals("PENDENTE"))
+		if (!eleitorEx.getStatus().equals("PENDENTE") || eleitorEx.getStatus() == "VOTOU")
 			return false;
 
 		return true;

@@ -31,9 +31,9 @@ public class VotoService {
 	@Autowired
 	private CandidatoService candidatoService;
 	
-	public String votar(Voto voto) { //long id
+	public String votar(Voto voto, Long id) {
 
-		//verificarEleitor(id);
+		verificarEleitor(id);
 		
 		encontrarCandidatos(voto);
 		
@@ -61,28 +61,26 @@ public class VotoService {
 		if (prefeito == null || vereador == null)
 			throw new CandidatoInvalido("candidato inexistente");
 		
-		
-		
 		voto.setPrefeito(prefeito);
 		voto.setVereador(vereador);
 	}
 
-//	private void verificarEleitor (Long id) {
-//		
-//		Eleitor eleitor = eleitorService.findById(id);
-//		if (eleitor == null)
-//			throw new EleitorInvalido("Eleitor invalido");
-//		
-//		else if (!eleitor.getStatus().equals("APTO")) {
-//			eleitor.setStatus("BLOQUEADO");
-//			eleitorService.save(eleitor);
-//			
-//			throw new StatusInvalido("Usuário com cadastro invalido tentou votar. O usuário será bloqueado!");
-//		}
-//		
-//		eleitor.setStatus("VOTOU");
-//		eleitorService.save(eleitor);
-//	}
+	private void verificarEleitor (Long id) {
+		
+		Eleitor eleitor = eleitorService.findById(id);
+		if (eleitor == null)
+			throw new EleitorInvalido("Eleitor invalido");
+		
+		else if (!eleitor.getStatus().equals("APTO")) {
+			eleitor.setStatus("BLOQUEADO");
+			eleitorService.save(eleitor);
+			
+			throw new StatusInvalido("Usuário com cadastro invalido tentou votar. O usuário será bloqueado!");
+		}
+		
+		eleitor.setStatus("VOTOU");
+		eleitorService.update(eleitor, eleitor.getId());
+	}
 	
 	public Apuracao realizarApuracao() {
 		
